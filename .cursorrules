@@ -1,0 +1,85 @@
+# .cursorrules
+
+## General Project Guidelines
+- The project must follow a **modular structure** with clear separation of concerns.
+- All code must be **well-documented** using docstrings (Python) and JSDoc (TypeScript).
+- Every feature must include **unit tests** and **integration tests** to ensure reliability.
+- Dependency management must be **clean and divided** between backend and frontend.
+
+---
+
+## Backend (NestJS + TypeScript)
+- Use **NestJS** for API development, following a **modular service-based architecture**.
+- **Weaviate** will be the primary vector database, and its SDK must be used for all interactions.
+- All database queries must go through a **dedicated repository layer** to maintain clean architecture.
+- Use **ESLint + Prettier** for code formatting and enforce TypeScript strict mode.
+- API routes must be documented using **OpenAPI (Swagger)** for external and internal use.
+- **Unit tests** must cover all services and controllers using **Jest**.
+- **Integration tests** must be included to validate API endpoints.
+
+### Dependency Management
+- Use **pnpm** over npm for package management.
+- Dependencies must be listed in `package.json` and version-locked with `package-lock.json`.
+- Avoid unnecessary dependencies; regularly audit and remove unused packages.
+
+---
+
+## Frontend (Next.js + TypeScript)
+- Use **Next.js** for a server-rendered frontend with API calls handled via `services/`.
+- The UI must be component-based and reusable, using **Tailwind CSS** for styling.
+- State management must use **React Context or Zustand** (avoid unnecessary Redux usage).
+- API calls should be made using a dedicated **service layer** (avoid direct fetch calls).
+- The UI must include error handling and **graceful fallback states**.
+- **Jest + React Testing Library** must be used for frontend unit testing.
+- Use **ESLint + Prettier** for consistent coding styles.
+
+### Dependency Management
+- Use **pnpm** or **yarn** for package management.
+- Dependencies must be listed in `package.json` and locked for version consistency.
+- Third-party dependencies must be audited before inclusion.
+
+---
+
+## Python Service (Crawl4AI + RAPTOR)
+- Use **Poetry** for dependency management; `requirements.txt` should only be used for deployment.
+- Follow **PEP 8** coding standards and ensure type hints are used where applicable.
+- Use **FastAPI** to expose APIs for crawling and embedding.
+- All interactions with **Crawl4AI** must be modularized into a dedicated `crawl4ai/` service.
+- RAPTOR processing must be separated into `summarization/` and `embedding/` modules.
+- Store embeddings in **Weaviate**, ensuring proper indexing and querying logic.
+- **Pytest** must be used for unit tests, and integration tests should validate API responses.
+
+---
+
+## Testing & CI/CD
+- Every module must have at least **80% test coverage**.
+- Use **GitHub Actions** for CI/CD to run:
+  - **Linting**
+  - **Unit tests**
+  - **Integration tests**
+
+---
+
+## Documentation & Code Quality
+- Every function must have **a docstring (Python) or JSDoc (TypeScript)**.
+- **README.md** must include:
+  - Installation instructions
+  - How to run the project
+  - API documentation
+- Internal documentation should be maintained in a `docs/` folder using **MkDocs**.
+
+---
+
+## Security & Performance
+- **Environment variables** must be stored in `.env` files and not committed.
+- Never store **API keys, passwords, or sensitive data** in the repository.
+- Always use **pagination and indexing** when querying large datasets.
+- Optimize **API response times** by implementing caching where applicable.
+
+---
+
+## Business Rules
+- Weaviate must be the **only** vector database used.
+- The system must support **querying across multiple documentation versions**.
+- Users should be able to specify which **documentation version** they want results from.
+- The frontend must provide a **smooth UX** with **real-time search** capabilities.
