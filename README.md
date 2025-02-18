@@ -27,8 +27,8 @@ The system consists of three main services:
 
 ### Prerequisites
 
-- Node.js >= 18
-- Python >= 3.9
+- Node.js >= 20
+- Python >= 3.12
 - Docker
 - pnpm (for Node.js package management)
 - Poetry (for Python package management)

@@ -5,6 +5,8 @@
 - All code must be **well-documented** using docstrings (Python) and JSDoc (TypeScript).
 - Every feature must include **unit tests** and **integration tests** to ensure reliability.
 - Dependency management must be **clean and divided** between backend and frontend.
+- We are using Python 3.12 and Node.js 20.
+- Keep an up-to-date CHANGELOG.md and PROJECT_PLAN.md files with our latest advancements and plans.
 
 ---
 
