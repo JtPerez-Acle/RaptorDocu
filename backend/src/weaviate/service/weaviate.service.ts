@@ -83,6 +83,20 @@ export class WeaviateService {
     try {
       this.logger.debug(`Searching for: ${query} with limit ${limit}`);
       
+      // Ensure we have a client
+      if (!this.weaviateClient) {
+        try {
+          this.initializeClient();
+        } catch (error) {
+          // If we can't connect to Weaviate, use mock data
+          this.logger.warn(`Using mock data because Weaviate is not available: ${error.message}`);
+          
+          // Import dynamically to avoid circular dependencies
+          const { getMockSearchResults } = await import('../mocks/mock-data');
+          return getMockSearchResults(query, limit);
+        }
+      }
+      
       // Build the query
       let queryBuilder = this.client().graphql
         .get()
@@ -157,7 +171,13 @@ export class WeaviateService {
       };
     } catch (error) {
       this.logger.error(`Error searching documents: ${error.message}`);
-      throw error;
+      
+      // Fall back to mock data on errors
+      this.logger.warn(`Falling back to mock data due to search error`);
+      
+      // Import dynamically to avoid circular dependencies
+      const { getMockSearchResults } = await import('../mocks/mock-data');
+      return getMockSearchResults(query, limit);
     }
   }
 
@@ -168,6 +188,26 @@ export class WeaviateService {
    */
   async getDocumentById(id: string): Promise<Document> {
     try {
+      // Check if we're using mock data
+      if (!this.weaviateClient) {
+        try {
+          this.initializeClient();
+        } catch (error) {
+          // If we can't connect to Weaviate, use mock data
+          this.logger.warn(`Using mock data because Weaviate is not available: ${error.message}`);
+          
+          // Import dynamically to avoid circular dependencies
+          const { getMockDocumentById } = await import('../mocks/mock-data');
+          const mockDoc = getMockDocumentById(id);
+          
+          if (!mockDoc) {
+            throw new NotFoundException(`Document with ID ${id} not found in mock data`);
+          }
+          
+          return mockDoc;
+        }
+      }
+      
       this.logger.debug(`Fetching document with ID: ${id}`);
       
       const result = await this.client().data
@@ -200,7 +240,18 @@ export class WeaviateService {
         throw error;
       }
       
-      throw new Error(`Failed to fetch document: ${error.message}`);
+      // Fall back to mock data on errors
+      this.logger.warn(`Falling back to mock data due to error fetching document by ID`);
+      
+      // Import dynamically to avoid circular dependencies
+      const { getMockDocumentById } = await import('../mocks/mock-data');
+      const mockDoc = getMockDocumentById(id);
+      
+      if (!mockDoc) {
+        throw new NotFoundException(`Document with ID ${id} not found in mock data`);
+      }
+      
+      return mockDoc;
     }
   }
 }

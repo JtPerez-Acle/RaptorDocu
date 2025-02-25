@@ -1,0 +1,9 @@
+{
+  "content": "Weaviate is a vector database designed for scalable AI-powered applications. It stores data objects and vector embeddings for efficient similarity search. This makes it perfect for semantic search, recommendation systems, and other applications requiring finding similar items based on meaning rather than keywords. Weaviate supports multiple vectorization modules and can be used with various ML models for generating embeddings.",
+  "metadata": {
+    "title": "Weaviate Vector Database",
+    "url": "https://weaviate.io/overview",
+    "source": "test-data",
+    "version": "1.0"
+  }
+}

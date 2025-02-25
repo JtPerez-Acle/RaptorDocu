@@ -41,13 +41,20 @@ class Crawl4AIClient:
         self.settings = settings
         self.base_url = settings.crawl4ai_base_url
         self.api_key = settings.crawl4ai_api_key
+        
+        # Setup headers
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+        
+        # Add Authorization header only if API key is provided
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+            
         self.client = httpx.AsyncClient(
             timeout=60.0,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
+            headers=headers,
         )
     
     async def start_crawl(

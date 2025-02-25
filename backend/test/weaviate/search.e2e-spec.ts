@@ -20,6 +20,12 @@ describe('SearchController (e2e)', () => {
         forbidNonWhitelisted: true,
       }),
     );
+    
+    // Important: set the global prefix as in main.ts
+    app.setGlobalPrefix('api', {
+      exclude: ['/health'],
+    });
+    
     await app.init();
   });
 
@@ -42,7 +48,7 @@ describe('SearchController (e2e)', () => {
         .send({ 
           query: 'How to use RAPTOR?', 
           limit: 5, 
-          sources: ['documentation'] 
+          source: 'documentation'
         })
         .expect(200)
         .expect((res) => {

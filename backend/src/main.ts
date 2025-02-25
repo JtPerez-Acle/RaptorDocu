@@ -18,8 +18,10 @@ async function bootstrap() {
   // Enable CORS
   app.enableCors();
   
-  // Set global prefix for all routes
-  app.setGlobalPrefix('api');
+  // Set global prefix for all routes, but exclude health check
+  app.setGlobalPrefix('api', {
+    exclude: ['/health'],
+  });
   
   // Swagger documentation setup
   const config = new DocumentBuilder()

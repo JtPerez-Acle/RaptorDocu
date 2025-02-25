@@ -20,6 +20,12 @@ describe('CrawlerController (e2e)', () => {
         forbidNonWhitelisted: true,
       }),
     );
+    
+    // Important: set the global prefix as in main.ts
+    app.setGlobalPrefix('api', {
+      exclude: ['/health'],
+    });
+    
     await app.init();
   });
 

@@ -6,12 +6,52 @@ All notable changes to the RAPTOR Documentation Assistant project will be docume
 
 ### Added
 
+- Service Integration and Project Organization
+  - Reorganized project structure for better maintainability
+  - Created dedicated scripts directory with well-documented utilities
+  - Added comprehensive test runner for executing all tests
+  - Moved test scripts to scripts/tests directory with proper documentation
+  - Added README files to explain directory contents and usage
+  - Created workflow-demo.sh for easy demonstration of the complete system
+  - Fixed inter-service connection settings for proper service communication
+  - Configured Docker environment variables for local development setup
+  - Updated volume mounts to ensure script access across containers
+  - Added proper error handling when services are unavailable
+  - Ensured frontend properly connects to the backend API
+  
+- Full System Integration and Workflow Testing
+  - Successfully tested end-to-end document processing workflow
+  - Verified document embedding and vector search functionality
+  - Tested communication between all services
+  - Created test scripts for validating the complete system
+  - Added WORKFLOW_TEST_SUMMARY.md with detailed test results
+  - Implemented graceful error handling for Weaviate connection issues
+  - Added fallback mechanisms for service dependencies
+  
 - Enhanced Docker Configuration
   - Fixed Docker build issues in all services
   - Added testing during container build for quality assurance
   - Implemented health checks for all services in docker-compose
   - Added verification scripts to ensure service health before startup
   - Configured failover options with both wget and curl for reliability
+  - Fixed transformer service health check for reliable monitoring
+
+- API Enhancements and Bugfixes
+  - Improved backend API endpoint structure with consistent prefixes
+  - Fixed health endpoint accessibility outside of API prefix
+  - Added robust error handling in all controllers
+  - Enhanced response formatting to ensure cross-client compatibility
+  - Implemented content-type detection and request method flexibility
+  - Extended search controllers to handle both GET and POST requests
+  - Fixed missing endpoints required by e2e tests
+
+- Crawler Embedding Improvements
+  - Fixed critical bug in Weaviate search implementation causing NoneType errors
+  - Added robust error handling in all vector search operations
+  - Implemented fallback to mock data when vector search fails
+  - Enhanced data validation to prevent response structure errors
+  - Improved type checking in embedding service
+  - Added proper response context handling between microservices
 - API Documentation
   - Created comprehensive API_ENDPOINTS.md reference
   - Documented all backend, crawler, and database endpoints

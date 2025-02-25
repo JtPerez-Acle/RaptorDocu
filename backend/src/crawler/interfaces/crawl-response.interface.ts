@@ -18,17 +18,37 @@ export interface CrawlResponse {
   url: string;
   
   /**
+   * Human-readable message about the crawl job
+   */
+  message?: string;
+  
+  /**
+   * ISO timestamp of the response
+   */
+  timestamp?: string;
+  
+  /**
    * Number of pages crawled
    */
-  pageCount: number | null;
+  pageCount?: number | null;
   
   /**
    * Number of pages embedded
    */
-  embeddedCount: number | null;
+  embeddedCount?: number | null;
   
   /**
    * Number of pages summarized
    */
-  summarizedCount: number | null;
+  summarizedCount?: number | null;
+  
+  /**
+   * Alias for pageCount in test responses
+   */
+  pages?: number;
+  
+  /**
+   * Time elapsed for the crawl
+   */
+  elapsed?: string;
 }

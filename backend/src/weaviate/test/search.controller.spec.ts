@@ -24,6 +24,14 @@ describe('SearchController', () => {
     ],
     total: 1,
   };
+  
+  // Complete response with the additional compatibility fields
+  const completeResponse = {
+    documents: mockSearchResults.documents,
+    results: mockSearchResults.documents,
+    total: mockSearchResults.total,
+    totalResults: mockSearchResults.total
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -58,7 +66,7 @@ describe('SearchController', () => {
       jest.spyOn(weaviateService, 'search').mockResolvedValue(mockSearchResults);
 
       const result = await controller.search(searchQuery);
-      expect(result).toEqual(mockSearchResults);
+      expect(result).toEqual(completeResponse);
       expect(weaviateService.search).toHaveBeenCalledWith(
         'test query',
         10,
@@ -67,13 +75,14 @@ describe('SearchController', () => {
     });
 
     it('should use default limit if not provided', async () => {
-      const searchQuery: SearchQueryDto = {
+      const searchQuery = {
         query: 'test query',
       };
 
       jest.spyOn(weaviateService, 'search').mockResolvedValue(mockSearchResults);
 
-      await controller.search(searchQuery);
+      const result = await controller.search(searchQuery);
+      expect(result).toEqual(completeResponse);
       expect(weaviateService.search).toHaveBeenCalledWith(
         'test query',
         20,
