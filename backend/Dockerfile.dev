@@ -1,0 +1,31 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install system dependencies for healthchecks
+RUN apk add --no-cache wget curl
+
+# Install pnpm
+RUN npm install -g pnpm@latest
+
+# Copy package files
+COPY package.json pnpm-lock.yaml* ./
+
+# Install dependencies
+RUN pnpm install
+
+# Copy the rest of the application
+COPY . .
+
+# Run tests during build to verify functionality
+RUN pnpm run test
+
+# Expose port
+EXPOSE 3000
+
+# Health verification script to run before starting
+COPY scripts/verify-health.sh /verify-health.sh
+RUN chmod +x /verify-health.sh
+
+# Start the development server
+CMD ["/bin/sh", "-c", "/verify-health.sh && pnpm run start:dev"]

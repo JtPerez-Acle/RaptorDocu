@@ -52,9 +52,6 @@ build/
 .env.test.local
 .env.production.local
 
-# Weaviate
-weaviate/
-
 # Docker
 .docker/
 
@@ -70,3 +67,6 @@ Thumbs.db
 
 # Cursor
 .cursorrules
+
+# Claude
+CLAUDE.md
